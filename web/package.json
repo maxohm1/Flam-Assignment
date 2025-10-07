@@ -2,23 +2,34 @@
   "name": "cv-processing-web-viewer",
   "version": "1.0.0",
   "description": "TypeScript web viewer for computer vision processing results from Android app",
-  "main": "viewer.js",
+  "main": "server.js",
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
-    "serve": "python -m http.server 8080",
-    "dev": "tsc --watch & python -m http.server 8080"
+    "server": "node server.js",
+    "dev": "npm run build && npm run server",
+    "install-deps": "npm install express ws",
+    "test-server": "curl http://localhost:8080/api/health",
+    "clean": "rm -f viewer.js viewer.js.map"
   },
   "keywords": [
     "computer-vision",
     "android",
     "typescript",
     "opencv",
-    "image-processing"
+    "image-processing",
+    "websocket",
+    "rest-api"
   ],
   "author": "SE Intern Assignment",
   "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2",
+    "ws": "^8.18.3"
+  },
   "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/ws": "^8.5.10",
     "typescript": "^5.7.3"
   }
 }
