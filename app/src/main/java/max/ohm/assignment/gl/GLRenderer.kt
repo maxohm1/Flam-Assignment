@@ -103,49 +103,47 @@ class GLRenderer : GLSurfaceView.Renderer {
     override fun onDrawFrame(gl: GL10?) {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)
 
-        // Update texture if new bitmap is available
-        currentBitmap?.let { bitmap ->
-            if (!bitmap.isRecycled) {
-                try {
-                    GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId)
-                    GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0)
-                } catch (e: Exception) {
-                    Log.e(TAG, "Error uploading texture", e)
-                }
-            }
-        }
-
-        // Only draw if we have a texture
-        if (currentBitmap == null || currentBitmap?.isRecycled == true) {
+        // Only draw if we have a valid texture
+        val bitmap = currentBitmap
+        if (bitmap == null || bitmap.isRecycled) {
             return
         }
 
-        // Use shader program
-        GLES20.glUseProgram(program)
+        // Update texture if new bitmap is available
+        try {
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId)
+            GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0)
+            
+            // Use shader program
+            GLES20.glUseProgram(program)
 
-        // Enable vertex arrays
-        GLES20.glEnableVertexAttribArray(positionHandle)
-        GLES20.glEnableVertexAttribArray(texCoordHandle)
+            // Enable vertex arrays
+            GLES20.glEnableVertexAttribArray(positionHandle)
+            GLES20.glEnableVertexAttribArray(texCoordHandle)
 
-        // Set vertex data
-        GLES20.glVertexAttribPointer(
-            positionHandle, 2, GLES20.GL_FLOAT, false, 0, vertexBuffer
-        )
-        GLES20.glVertexAttribPointer(
-            texCoordHandle, 2, GLES20.GL_FLOAT, false, 0, textureBuffer
-        )
+            // Set vertex data
+            GLES20.glVertexAttribPointer(
+                positionHandle, 2, GLES20.GL_FLOAT, false, 0, vertexBuffer
+            )
+            GLES20.glVertexAttribPointer(
+                texCoordHandle, 2, GLES20.GL_FLOAT, false, 0, textureBuffer
+            )
 
-        // Bind texture
-        GLES20.glActiveTexture(GLES20.GL_TEXTURE0)
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId)
-        GLES20.glUniform1i(textureHandle, 0)
+            // Bind texture
+            GLES20.glActiveTexture(GLES20.GL_TEXTURE0)
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId)
+            GLES20.glUniform1i(textureHandle, 0)
 
-        // Draw
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
+            // Draw
+            GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
 
-        // Disable vertex arrays
-        GLES20.glDisableVertexAttribArray(positionHandle)
-        GLES20.glDisableVertexAttribArray(texCoordHandle)
+            // Disable vertex arrays
+            GLES20.glDisableVertexAttribArray(positionHandle)
+            GLES20.glDisableVertexAttribArray(texCoordHandle)
+            
+        } catch (e: Exception) {
+            Log.e(TAG, "Error rendering frame", e)
+        }
     }
 
     /**

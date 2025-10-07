@@ -172,22 +172,21 @@ class CameraHandler(
             val uBuffer = image.planes[1].buffer
             val vBuffer = image.planes[2].buffer
 
-            val ySize = yBuffer.remaining()
-            val uSize = uBuffer.remaining()
-            val vSize = vBuffer.remaining()
+            val yStride = image.planes[0].rowStride
+            val uvStride = image.planes[1].rowStride
+            val uvPixelStride = image.planes[1].pixelStride
 
-            val nv21 = ByteArray(ySize + uSize + vSize)
-            
-            yBuffer.get(nv21, 0, ySize)
-            vBuffer.get(nv21, ySize, vSize)
-            uBuffer.get(nv21, ySize + vSize, uSize)
+            val width = image.width
+            val height = image.height
 
-            val yuvImage = YuvImage(nv21, ImageFormat.NV21, image.width, image.height, null)
-            val out = ByteArrayOutputStream()
-            yuvImage.compressToJpeg(Rect(0, 0, image.width, image.height), 90, out)
-            val imageBytes = out.toByteArray()
+            // Create RGB array
+            val rgbArray = IntArray(width * height)
             
-            val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+            // Convert YUV to RGB
+            convertYuv420ToRgb(yBuffer, uBuffer, vBuffer, rgbArray, width, height, yStride, uvStride, uvPixelStride)
+            
+            // Create bitmap from RGB array
+            val bitmap = Bitmap.createBitmap(rgbArray, width, height, Bitmap.Config.ARGB_8888)
             
             // Handle rotation
             val rotationDegrees = image.imageInfo.rotationDegrees
@@ -195,6 +194,51 @@ class CameraHandler(
                 rotateBitmap(bitmap, rotationDegrees.toFloat())
             } else {
                 bitmap
+            }
+        }
+
+        private fun convertYuv420ToRgb(
+            yBuffer: ByteBuffer, uBuffer: ByteBuffer, vBuffer: ByteBuffer,
+            rgbArray: IntArray, width: Int, height: Int,
+            yStride: Int, uvStride: Int, uvPixelStride: Int
+        ) {
+            val yArray = ByteArray(yBuffer.remaining())
+            val uArray = ByteArray(uBuffer.remaining())
+            val vArray = ByteArray(vBuffer.remaining())
+            
+            yBuffer.get(yArray)
+            uBuffer.get(uArray)
+            vBuffer.get(vArray)
+            
+            for (y in 0 until height) {
+                for (x in 0 until width) {
+                    val yIndex = y * yStride + x
+                    val uvIndex = (y / 2) * uvStride + (x / 2) * uvPixelStride
+                    
+                    if (yIndex >= yArray.size || uvIndex >= uArray.size || uvIndex >= vArray.size) {
+                        continue
+                    }
+                    
+                    val Y = yArray[yIndex].toInt() and 0xFF
+                    val U = uArray[uvIndex].toInt() and 0xFF
+                    val V = vArray[uvIndex].toInt() and 0xFF
+                    
+                    // YUV to RGB conversion
+                    val C = Y - 16
+                    val D = U - 128
+                    val E = V - 128
+                    
+                    var R = (298 * C + 409 * E + 128) shr 8
+                    var G = (298 * C - 100 * D - 208 * E + 128) shr 8
+                    var B = (298 * C + 516 * D + 128) shr 8
+                    
+                    // Clamp to [0, 255]
+                    R = R.coerceIn(0, 255)
+                    G = G.coerceIn(0, 255)
+                    B = B.coerceIn(0, 255)
+                    
+                    rgbArray[y * width + x] = (0xFF shl 24) or (R shl 16) or (G shl 8) or B
+                }
             }
         }
 
