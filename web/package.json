@@ -1,0 +1,24 @@
+{
+  "name": "cv-processing-web-viewer",
+  "version": "1.0.0",
+  "description": "TypeScript web viewer for computer vision processing results from Android app",
+  "main": "viewer.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "serve": "python -m http.server 8080",
+    "dev": "tsc --watch & python -m http.server 8080"
+  },
+  "keywords": [
+    "computer-vision",
+    "android",
+    "typescript",
+    "opencv",
+    "image-processing"
+  ],
+  "author": "SE Intern Assignment",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
+}
