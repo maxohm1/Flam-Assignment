@@ -87,8 +87,7 @@ dependencies {
     implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
     implementation("androidx.camera:camera-view:$cameraxVersion")
     
-    // OpenCV for Android
-    implementation("org.opencv:opencv-android:4.5.3")
+    // OpenCV - Using stubbed native implementation instead of external dependency
     
     // Coroutines for async operations
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
