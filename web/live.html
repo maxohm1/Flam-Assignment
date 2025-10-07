@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Camera Feed</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #1a1a1a;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        
+        #status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 14px;
+            z-index: 1000;
+            background-color: #4CAF50;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .viewer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        #cameraImage {
+            max-width: 100%;
+            height: auto;
+            border: 3px solid #4CAF50;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .stat-box {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #333;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #888;
+            text-transform: uppercase;
+        }
+        
+        .mode-badge {
+            background: #FF9800;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="status">🔴 Connecting...</div>
+    
+    <div class="container">
+        <h1>🎥 Live Camera Feed</h1>
+        
+        <div class="viewer">
+            <div class="mode-badge" id="mode">LOADING...</div>
+            
+            <img id="cameraImage" src="" alt="Live Camera Feed">
+            
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-value" id="fps">--</div>
+                    <div class="stat-label">FPS</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="resolution">--</div>
+                    <div class="stat-label">Resolution</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="frames">--</div>
+                    <div class="stat-label">Total Frames</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="updated">--</div>
+                    <div class="stat-label">Last Update</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        console.log('🚀 Live viewer starting...');
+        
+        let lastTimestamp = 0;
+        let frameCount = 0;
+        
+        // Update status
+        function updateStatus(connected) {
+            const statusEl = document.getElementById('status');
+            if (connected) {
+                statusEl.textContent = '🟢 Connected';
+                statusEl.style.backgroundColor = '#4CAF50';
+            } else {
+                statusEl.textContent = '🔴 Disconnected';
+                statusEl.style.backgroundColor = '#f44336';
+            }
+        }
+        
+        // Fetch and display frame
+        async function updateFrame() {
+            try {
+                const response = await fetch('http://localhost:8080/api/frame');
+                const data = await response.json();
+                
+                if (data.success && data.data) {
+                    const frame = data.data;
+                    
+                    // Only update if new frame
+                    if (frame.timestamp > lastTimestamp) {
+                        lastTimestamp = frame.timestamp;
+                        frameCount++;
+                        
+                        // Update image
+                        document.getElementById('cameraImage').src = 
+                            'data:image/jpeg;base64,' + frame.image;
+                        
+                        // Update stats
+                        document.getElementById('fps').textContent = frame.fps.toFixed(1);
+                        document.getElementById('resolution').textContent = frame.resolution;
+                        document.getElementById('mode').textContent = frame.processingMode;
+                        
+                        // Update time
+                        const now = new Date();
+                        document.getElementById('updated').textContent = 
+                            now.toLocaleTimeString();
+                        
+                        updateStatus(true);
+                        console.log('✅ Frame ' + frameCount + ' displayed');
+                    }
+                }
+            } catch (error) {
+                console.error('❌ Error fetching frame:', error);
+                updateStatus(false);
+            }
+        }
+        
+        // Fetch server stats
+        async function updateStats() {
+            try {
+                const response = await fetch('http://localhost:8080/api/stats');
+                const data = await response.json();
+                
+                if (data.success && data.data) {
+                    document.getElementById('frames').textContent = 
+                        data.data.totalFrames;
+                }
+            } catch (error) {
+                console.error('Error fetching stats:', error);
+            }
+        }
+        
+        // Start polling
+        console.log('📡 Starting polling every 200ms...');
+        setInterval(updateFrame, 200);  // Poll every 200ms (5 FPS)
+        setInterval(updateStats, 2000); // Update stats every 2 seconds
+        
+        // Initial load
+        updateFrame();
+        updateStats();
+        
+        // Mark as connected after first successful load
+        setTimeout(() => {
+            updateStatus(true);
+            console.log('✅ Viewer ready!');
+        }, 1000);
+    </script>
+</body>
+</html>
+
