@@ -24,7 +24,7 @@ A real-time computer vision application featuring Android native processing with
 ### CheckOut the Assignment Demo Video
 
 <a href="https://drive.google.com/file/d/13QaEKrK8w1gY3QuNUYkWejyT0P_AqQFM/view?usp=sharing" target="_blank">
-    <img src="https://github.com/maxohm1/OneAI-ScreenShot/blob/main/371907120_YOUTUBE_ICON_400px.gif" width="150" />
+    <img src="https://github.com/maxohm1/OneAI-ScreenShot/blob/main/circular%20video.gif" width="150" />
 </a>
 
 
