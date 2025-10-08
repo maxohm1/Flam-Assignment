@@ -23,7 +23,88 @@ A real-time computer vision application featuring Android native processing with
 
 ## Screenshots
 
-*Screenshots showing the application in action:*
+
+<div align="center">
+
+<table>
+  <tr>
+    <td><img src="https://github.com/maxohm1/OneAI-ScreenShot/blob/main/.idea/phone%20raw.jpg" width="250" alt="OneAI Home Screen"></td>
+    <td><img src="https://github.com/maxohm1/OneAI-ScreenShot/blob/main/.idea/phone%20gray.jpg" width="250" alt="Text to Image Generation"></td>
+    <td><img src="https://github.com/maxohm1/OneAI-ScreenShot/blob/main/.idea/phone%20edge.jpg" width="250" alt="Image Transformation"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Phone</b><br><sub>Raw Camera Feed</sub></td>
+    <td align="center"><b>Phone</b><br><sub>Grayscale Filter</sub></td>
+    <td align="center"><b>Phone</b><br><sub>Edge Detection</sub></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/maxohm1/OneAI-ScreenShot/blob/main/.idea/phone%20edge2.jpg" width="250" alt="Main Interface"></td>
+    <td><img src="https://github.com/maxohm1/OneAI-ScreenShot/blob/main/.idea/phone%20edge3.jpg" width="250" alt="AI Chat Interface"></td>
+    <td><img src="https://github.com/maxohm1/OneAI-ScreenShot/blob/main/.idea/phone%20edge4.jpg" width="250" alt="Gallery View"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Phone</b><br><sub>Edge Detection</sub></td>
+    <td align="center"><b>Phone</b><br><sub>Edge Detection</sub></td>
+    <td align="center"><b>Phone</b><br><sub>Edge Detection</sub></td>
+  </tr>
+    <!-- <tr>
+    <td><img src="https://github.com/maxohm1/OneAI-ScreenShot/blob/main/inpaint.png" width="250" alt="AI Chat Interface"></td>
+    <td><img src="https://github.com/maxohm1/OneAI-ScreenShot/blob/main/try%20(1).png" width="250" alt="Gallery View"></td>
+    <td><img src="https://github.com/maxohm1/OneAI-ScreenShot/blob/main/try(2).png" width="250" alt="Gallery View"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Brush Magic</b><br><sub>Chat with AI models</sub></td>
+    <td align="center"><b>Fashion Try On</b><br><sub>Your masterpieces</sub></td>
+   <td align="center"><b>Fashion Try On</b><br><sub>Your masterpieces</sub></td>
+  </tr>
+    </tr>
+    <tr>
+    <td><img src="https://github.com/maxohm1/OneAI-ScreenShot/blob/main/video%20show.png" width="250" alt="AI Chat Interface"></td>
+    <td><img src="https://github.com/maxohm1/OneAI-ScreenShot/blob/main/head.png" width="250" alt="Gallery View"></td>
+    <td><img src="https://github.com/maxohm1/OneAI-ScreenShot/blob/main/ghibli.png" width="250" alt="Gallery View"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Video generation</b><br><sub>Chat with AI models</sub></td>
+    <td align="center"><b>Headshot</b><br><sub>Your masterpieces</sub></td>
+   <td align="center"><b>Ghibli</b><br><sub>Your masterpieces</sub></td>
+  </tr> -->
+</table>
+
+<table>
+ <tr>
+    <td><img src="https://github.com/maxohm1/OneAI-ScreenShot/blob/main/.idea/web%20raw.png" width="5550" alt="OneAI Home Screen"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Web</b><br><sub>Raw Camera Feed</sub></td>
+  </tr>
+
+  <tr>
+    <td><img src="https://github.com/maxohm1/OneAI-ScreenShot/blob/main/.idea/web%20gray.png" width="5550" alt="OneAI Home Screen"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Web</b><br><sub>Grayscale Live from Phone</sub></td>
+  </tr>
+
+  <tr>
+    <td><img src="https://github.com/maxohm1/OneAI-ScreenShot/blob/main/.idea/web%20edge.png" width="5550" alt="OneAI Home Screen"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Web</b><br><sub>Edge Detection Live from Phone</sub></td>
+  </tr>
+
+  <tr>
+    <td><img src="https://github.com/maxohm1/OneAI-ScreenShot/blob/main/.idea/fps%20show.png" width="5550" alt="OneAI Home Screen"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Web</b><br><sub>FPS show in Web</sub></td>
+  </tr>
+
+
+
+  
+</table>
+</div>
+
 
 ### Android App
 - **Raw Camera Feed** - Live camera preview without processing
