@@ -58,7 +58,7 @@ A real-time computer vision application featuring Android native processing with
 
 2. **Clone and Open Project**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/maxohm1/Flam-Assignment.git
    cd Assignment
    # Open in Android Studio: File → Open → Select 'Assignment' folder
    ```
@@ -111,8 +111,8 @@ A real-time computer vision application featuring Android native processing with
 ```
 ┌─────────────────────────────────────────┐
 │       MainActivity (Kotlin)             │
-│   - Camera permissions                   │
-│   - UI management                        │
+│   - Camera permissions                  │
+│   - UI management                       │
 └────────┬────────────────────┬───────────┘
          │                    │
          ▼                    ▼
