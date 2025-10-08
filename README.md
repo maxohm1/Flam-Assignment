@@ -116,7 +116,7 @@ A real-time computer vision application featuring Android native processing with
 - **Live Streaming** - Real-time frame updates via WebSocket
 - **Statistics Dashboard** - Server metrics and frame information
 
-> Note: Run the application to see it in action. The Android app displays camera frames with different processing modes, and the web viewer shows frames sent from the app in real-time.
+> Note: Run the application to see it in action. The Android app displays camera frames with different processing modes using the Toggle Mode button, and the web viewer shows frames sent from the app in real-time.
 
 ## Setup Instructions
 
