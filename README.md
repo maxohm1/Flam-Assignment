@@ -66,7 +66,6 @@ A real-time computer vision application featuring Android native processing with
 3. **OpenCV Dependencies**
    - OpenCV is configured in the project via CMake
    - Native C++ libraries are built automatically with Gradle
-   - Required ABIs: armeabi-v7a, arm64-v8a, x86, x86_64
 
 4. **Build and Run**
    ```bash
