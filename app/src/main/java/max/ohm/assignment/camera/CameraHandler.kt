@@ -74,9 +74,9 @@ class CameraHandler(
             preview?.setSurfaceProvider(it)
         }
 
-        // Image analysis use case
+        // Image analysis use case - Aggressively reduced resolution for 15+ FPS
         imageAnalyzer = ImageAnalysis.Builder()
-            .setTargetResolution(android.util.Size(640, 480))
+            .setTargetResolution(android.util.Size(320, 240))  // Much lower resolution for 15+ FPS
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_YUV_420_888)
             .build()
