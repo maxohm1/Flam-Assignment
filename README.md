@@ -1,6 +1,11 @@
-# 🧪 Android + OpenCV-C++ + OpenGL Assessment - RnD Intern
+# 🔬 Real-Time Computer Vision Processing System
 
-**Real-Time Edge Detection Viewer** - A professional Android application demonstrating native C++ OpenCV processing, OpenGL ES rendering, and CameraX integration.
+**Professional Android & Web Solution** - A comprehensive system demonstrating real-time computer vision processing with native C++ OpenCV, OpenGL ES rendering, CameraX integration, and TypeScript web viewer with WebSocket/REST API streaming capabilities.
+
+[![Android](https://img.shields.io/badge/Android-9%2B-green.svg)](https://android.com)
+[![OpenCV](https://img.shields.io/badge/OpenCV-4.9.0-blue.svg)](https://opencv.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7+-blue.svg)](https://www.typescriptlang.org)
+[![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org)
 
 ## 📱 Features Implemented
 
@@ -22,6 +27,16 @@
 - ✅ **Modular Architecture** - Clean separation of concerns
 - ✅ **Memory Management** - Proper bitmap recycling and resource cleanup
 - ✅ **Thread Safety** - Concurrent frame processing with synchronization
+
+### Web Server Components ✅
+- ✅ **TypeScript Viewer** - Professional web-based frame viewer
+- ✅ **WebSocket Server** - Real-time bidirectional communication
+- ✅ **REST API** - RESTful endpoints for frame data and statistics
+- ✅ **Express.js Backend** - Production-ready Node.js web server
+- ✅ **Dual Protocol Support** - WebSocket + HTTP polling fallback
+- ✅ **Live Statistics** - Real-time server metrics and performance tracking
+- ✅ **Frame History** - Buffered frame storage for playback
+- ✅ **Multiple Views** - Static viewer, live streaming, and test interfaces
 
 ## 📸 Screenshots
 
@@ -68,7 +83,15 @@ Assignment/
 │   │
 │   └── build.gradle.kts                  # App build configuration
 │
-├── web/                                   # TypeScript web viewer (to be implemented)
+├── web/                                   # TypeScript web viewer
+│   ├── package.json                       # Node.js dependencies
+│   ├── tsconfig.json                      # TypeScript configuration
+│   ├── viewer.ts                          # Main TypeScript viewer logic
+│   ├── server.js                          # Express + WebSocket server
+│   ├── index.html                         # Main web interface
+│   ├── live.html                          # Real-time streaming viewer
+│   └── test-viewer.html                   # Testing interface
+│
 └── README.md                              # This file
 ```
 
@@ -86,7 +109,461 @@ Assignment/
 | Min SDK | Android 9.0 (API 28) |
 | Target SDK | Android 36+ |
 
-## ⚙️ Setup Instructions
+---
+
+## 🌐 Web Server Documentation
+
+### Overview
+The web server provides a professional interface for viewing processed camera frames from the Android application. It features a TypeScript-based viewer with dual-protocol support (WebSocket + REST API) for maximum compatibility and reliability.
+
+### Key Features
+
+- **🔌 Real-Time Streaming** - WebSocket-based live frame updates with automatic reconnection
+- **🔄 HTTP Fallback** - Automatic polling when WebSocket is unavailable
+- **📊 Live Statistics** - Server metrics including FPS, uptime, connected clients
+- **💾 Frame History** - Buffered storage of recent frames for playback
+- **🎨 Multiple Processing Modes** - Support for RAW, GRAYSCALE, and EDGE_DETECTION
+- **💁 Responsive UI** - Clean, professional interface with real-time updates
+- **🔒 Production Ready** - Error handling, logging, and graceful degradation
+
+### Tech Stack
+
+| Component | Technology |
+|-----------|------------|
+| Frontend | TypeScript 5.7+ |
+| Backend | Node.js + Express 4.x |
+| WebSocket | ws 8.x |
+| Build Tool | TypeScript Compiler |
+| Server Port | 8080 |
+
+### Installation & Setup
+
+#### Prerequisites
+```bash
+# Required
+- Node.js 18+ and npm
+- TypeScript 5.7+
+
+# Check versions
+node --version    # Should be v18 or higher
+npm --version     # Should be v9 or higher
+```
+
+#### Quick Start
+
+```bash
+# Navigate to web directory
+cd web
+
+# Install dependencies
+npm install
+
+# Build TypeScript
+npm run build
+
+# Start server
+npm run server
+
+# Server will be available at http://localhost:8080
+```
+
+#### Available npm Scripts
+
+```bash
+# Build TypeScript to JavaScript
+npm run build
+
+# Watch mode (auto-rebuild on changes)
+npm run watch
+
+# Start the server
+npm run server
+
+# Build and start (development)
+npm run dev
+
+# Test server health
+npm run test-server
+
+# Clean build artifacts
+npm run clean
+```
+
+### Server Architecture
+
+```
+┌──────────────────────────────────────┐
+│        Express.js Server (Port 8080)       │
+│                                              │
+│  ┌───────────────┐   ┌───────────────┐  │
+│  │  REST API      │   │  WebSocket     │  │
+│  │  Endpoints     │   │  Server        │  │
+│  └───────────────┘   └───────────────┘  │
+│         │                     │            │
+│         └────────┬────────┘            │
+│                  │                        │
+│         ┌────────┴─────────┐           │
+│         │  Frame Storage   │           │
+│         │  & Statistics    │           │
+│         └─────────────────┘           │
+└──────────────────────────────────────┘
+            │                     │
+            │                     │
+  ┌─────────┴─────┐     ┌─────┴───────┐
+  │  Web Browser   │     │  Android App  │
+  │  (TypeScript)  │     │  (Kotlin/C++) │
+  └───────────────┘     └──────────────┘
+```
+
+### REST API Endpoints
+
+#### GET `/api/health`
+Health check endpoint
+
+**Response:**
+```json
+{
+  "status": "ok",
+  "timestamp": 1704924800000,
+  "uptime": 3600
+}
+```
+
+#### GET `/api/frame`
+Get the most recent processed frame
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "image": "base64_encoded_image_data...",
+    "fps": 25.4,
+    "resolution": "1280x720",
+    "processingMode": "EDGE_DETECTION",
+    "timestamp": 1704924800000
+  }
+}
+```
+
+#### GET `/api/stats`
+Get server statistics
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "totalFrames": 1547,
+    "avgFPS": 24.8,
+    "lastFrameTime": 1704924800000,
+    "connectedClients": 3,
+    "uptime": 3600,
+    "historySize": 100
+  }
+}
+```
+
+#### GET `/api/history`
+Get frame history (last N frames)
+
+**Query Parameters:**
+- `limit` (optional): Number of frames to return (default: 10, max: 100)
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "image": "base64_encoded_image...",
+      "fps": 25.4,
+      "resolution": "1280x720",
+      "processingMode": "EDGE_DETECTION",
+      "timestamp": 1704924800000
+    }
+  ]
+}
+```
+
+#### POST `/api/frame`
+Upload a new processed frame (for Android app integration)
+
+**Request Body:**
+```json
+{
+  "image": "base64_encoded_image_data...",
+  "fps": 25.4,
+  "resolution": "1280x720",
+  "processingMode": "EDGE_DETECTION"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Frame received and broadcast to 3 clients"
+}
+```
+
+#### POST `/api/clear`
+Clear all stored frames and reset statistics
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Data cleared successfully"
+}
+```
+
+### WebSocket Protocol
+
+#### Connection
+```javascript
+const ws = new WebSocket('ws://localhost:8080');
+```
+
+#### Message Types
+
+**Server → Client Messages:**
+
+```typescript
+// New frame available
+{
+  "type": "frame",
+  "data": {
+    "image": "base64_encoded_image...",
+    "fps": 25.4,
+    "resolution": "1280x720",
+    "processingMode": "EDGE_DETECTION",
+    "timestamp": 1704924800000
+  }
+}
+
+// Statistics update
+{
+  "type": "stats",
+  "data": {
+    "totalFrames": 1547,
+    "avgFPS": 24.8,
+    "connectedClients": 3,
+    "uptime": 3600
+  }
+}
+
+// Data cleared
+{
+  "type": "cleared",
+  "data": {}
+}
+
+// Error occurred
+{
+  "type": "error",
+  "data": {
+    "message": "Error description"
+  }
+}
+```
+
+**Client → Server Messages:**
+
+```typescript
+// Request latest frame
+{
+  "type": "requestFrame"
+}
+
+// Request statistics
+{
+  "type": "requestStats"
+}
+```
+
+### TypeScript Viewer Features
+
+#### Auto-Reconnection
+- Automatically reconnects to WebSocket if connection is lost
+- Configurable reconnection interval (default: 5 seconds)
+- Fallback to HTTP polling if WebSocket fails
+
+#### HTTP Polling Fallback
+- Polls `/api/frame` every 200ms when WebSocket unavailable
+- Only updates display when new frame is detected
+- Automatic stats refresh every 2 seconds
+
+#### Performance Monitoring
+- Real-time FPS display
+- Frame resolution tracking
+- Processing mode indicator with color coding
+- Timestamp display
+- Server statistics overlay
+
+### Available Views
+
+#### 1. Main Viewer (`index.html`)
+- Static frame viewer with manual refresh
+- Mode toggle between RAW/GRAYSCALE/EDGE_DETECTION
+- Clear data functionality
+- Fallback to sample data when no server connection
+
+**Access:** `http://localhost:8080/index.html`
+
+#### 2. Live Streaming Viewer (`live.html`)
+- Real-time WebSocket streaming
+- Automatic frame updates
+- Live statistics display
+- Connection status indicator
+
+**Access:** `http://localhost:8080/live.html`
+
+#### 3. Test Viewer (`test-viewer.html`)
+- Development and testing interface
+- Manual API endpoint testing
+- WebSocket connection testing
+- Sample data generation
+
+**Access:** `http://localhost:8080/test-viewer.html`
+
+### Integration with Android App
+
+#### Option 1: HTTP POST
+```kotlin
+// Send frame to server
+val client = OkHttpClient()
+val json = JSONObject().apply {
+    put("image", base64EncodedImage)
+    put("fps", currentFPS)
+    put("resolution", "${width}x${height}")
+    put("processingMode", "EDGE_DETECTION")
+}
+
+val request = Request.Builder()
+    .url("http://YOUR_SERVER_IP:8080/api/frame")
+    .post(json.toString().toRequestBody("application/json".toMediaType()))
+    .build()
+
+client.newCall(request).enqueue(callback)
+```
+
+#### Option 2: WebSocket
+```kotlin
+// Connect to WebSocket and stream frames
+val ws = OkHttpClient().newWebSocket(
+    Request.Builder()
+        .url("ws://YOUR_SERVER_IP:8080")
+        .build(),
+    webSocketListener
+)
+```
+
+### Configuration
+
+#### Server Port
+Edit `server.js` to change the port:
+```javascript
+const PORT = process.env.PORT || 8080;
+```
+
+#### Frame History Size
+Adjust the buffer size in `server.js`:
+```javascript
+const MAX_HISTORY = 100; // Number of frames to keep
+```
+
+#### Polling Interval
+Modify in `viewer.ts`:
+```typescript
+private reconnectInterval: number = 5000;  // 5 seconds
+this.pollingInterval = 200;  // 200ms = 5 FPS
+```
+
+### Production Deployment
+
+#### Using PM2 (Recommended)
+```bash
+# Install PM2
+npm install -g pm2
+
+# Start server with PM2
+cd web
+pm2 start server.js --name cv-server
+
+# View logs
+pm2 logs cv-server
+
+# Auto-start on system reboot
+pm2 startup
+pm2 save
+```
+
+#### Using Docker
+```dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY web/package*.json ./
+RUN npm install
+COPY web/ ./
+RUN npm run build
+EXPOSE 8080
+CMD ["npm", "run", "server"]
+```
+
+```bash
+# Build and run
+docker build -t cv-web-server .
+docker run -p 8080:8080 cv-web-server
+```
+
+### Troubleshooting
+
+#### WebSocket Connection Fails
+- Check firewall settings (port 8080 must be open)
+- Verify server is running: `curl http://localhost:8080/api/health`
+- Check browser console for error messages
+- Ensure no other service is using port 8080
+
+#### No Frames Displayed
+- Verify Android app is sending frames to correct IP address
+- Check network connectivity between devices
+- Use HTTP polling fallback by disabling WebSocket
+- Check server logs for incoming requests
+
+#### TypeScript Build Errors
+```bash
+# Clean and rebuild
+npm run clean
+npm install
+npm run build
+```
+
+#### High Memory Usage
+- Reduce `MAX_HISTORY` in server.js
+- Implement frame compression
+- Clear data periodically using `/api/clear`
+
+### Performance Tips
+
+1. **Network Optimization**
+   - Use lower resolution images (compress before sending)
+   - Reduce frame rate when high FPS not needed
+   - Use WebSocket instead of HTTP for better performance
+
+2. **Browser Performance**
+   - Use hardware acceleration
+   - Limit number of concurrent connections
+   - Clear frame history when not needed
+
+3. **Server Performance**
+   - Use clustering for multi-core systems
+   - Implement caching for frequently accessed endpoints
+   - Monitor memory usage with PM2
+
+---
+
+## ⚙️ Android Setup Instructions
 
 ### Prerequisites
 - Android Studio Hedgehog (2023.1.1) or later
