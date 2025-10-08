@@ -323,18 +323,23 @@ Assignment/
 
 ---
 
-**I Hope you <img src="https://images.emojiterra.com/google/noto-emoji/animated-emoji/2764.gif" height="30" alt="java logo"  /> this Assignment CheckOut Out More <img src="https://github.com/maxohm1/OneAI-ScreenShot/blob/main/200w.gif" height="40" />**
+<div align="center">
 
+**I Hope you <img src="https://images.emojiterra.com/google/noto-emoji/animated-emoji/2764.gif" height="30" alt="love" /> this Assignment CheckOut Out More <img src="https://github.com/maxohm1/OneAI-ScreenShot/blob/main/200w.gif" height="40" />**
+
+<br><br>
 
 <a href="https://www.linkedin.com/in/om-prakash-mandal-a253a12a6/" target="_blank">
-    <img src="https://github.com/maxohm1/OneAI-ScreenShot/blob/main/372102050_LINKEDIN_ICON_TRANSPARENT_1080.gif" width="150">
+    <img src="https://github.com/maxohm1/OneAI-ScreenShot/blob/main/372102050_LINKEDIN_ICON_TRANSPARENT_1080.gif" width="150" />
 </a>
 
 <a href="https://play.google.com/store/apps/details?id=max.ohm.oneai&hl=en" target="_blank">
-    <img src="https://user-images.githubusercontent.com/74038190/212281763-e6ecd7ef-c4aa-45b6-a97c-f33f6bb592bd.gif" width="100">
+    <img src="https://user-images.githubusercontent.com/74038190/212281763-e6ecd7ef-c4aa-45b6-a97c-f33f6bb592bd.gif" width="100" />
 </a>
-
 
 <a href="https://github.com/Android-by-Kotlin/OneAI-2.0" target="_blank">
-    <img src="https://user-images.githubusercontent.com/74038190/212257468-1e9a91f1-b626-4baa-b15d-5c385dfa7ed2.gif" width="140">
+    <img src="https://user-images.githubusercontent.com/74038190/212257468-1e9a91f1-b626-4baa-b15d-5c385dfa7ed2.gif" width="140" />
 </a>
+
+</div>
+
