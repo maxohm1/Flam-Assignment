@@ -72,7 +72,7 @@ A real-time computer vision application featuring Android native processing with
    # Sync and build
    ./gradlew clean build
    
-   # Or click the Run ▶️ button in Android Studio
+   # Or click the Run button in Android Studio
    # Connect Android device via USB or start emulator
    ```
 
@@ -110,8 +110,8 @@ A real-time computer vision application featuring Android native processing with
 ```
 ┌─────────────────────────────────────────┐
 │       MainActivity (Kotlin)             │
-│   - Camera permissions                  │
-│   - UI management                       │
+│       - Camera permissions              │
+│          - UI management                │
 └────────┬────────────────────┬───────────┘
          │                    │
          ▼                    ▼
@@ -124,15 +124,15 @@ A real-time computer vision application featuring Android native processing with
          │ Frame (Bitmap)      │ Processed
          ▼                     │
 ┌──────────────────────────────┴─────────┐
-│      NativeProcessor (JNI)             │
-│   - Kotlin ↔ C++ bridge                │
+│         NativeProcessor (JNI)          │
+│        - Kotlin ↔ C++ bridge           │
 └────────────────┬───────────────────────┘
                  │
                  ▼
 ┌────────────────────────────────────────┐
-│     OpenCV Processor (C++)             │
-│   - Canny Edge Detection               │
-│   - Grayscale Conversion               │
+│         OpenCV Processor (C++)         │
+│        - Canny Edge Detection          │
+│        - Grayscale Conversion          │
 └────────────────────────────────────────┘
 ```
 
