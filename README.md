@@ -108,6 +108,20 @@ A real-time computer vision application featuring Android native processing with
     <td align="center"><b>Web</b><br><sub>FPS show in Web</sub></td>
   </tr>
 
+   <tr>
+    <td><img src="https://github.com/maxohm1/OneAI-ScreenShot/blob/main/.idea/Screenshot%20(821).png" alt="OneAI Home Screen"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Web</b><br><sub>Web Viewer Sample Panel</sub></td>
+  </tr>
+
+   <tr>
+    <td><img src="https://github.com/maxohm1/OneAI-ScreenShot/blob/main/.idea/Screenshot%20(820).png" width="5550" alt="OneAI Home Screen"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Web</b><br><sub>Sample Frame show in Web</sub></td>
+  </tr>
+
 
 
   
