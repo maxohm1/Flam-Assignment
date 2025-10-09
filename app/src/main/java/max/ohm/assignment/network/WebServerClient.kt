@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
  * HTTP client for sending processed frames to the web viewer server
  * Supports both synchronous and asynchronous operations
  */
-class WebServerClient(private val baseUrl: String = "http://192.168.1.100:8080") {
+class WebServerClient(private val baseUrl: String = "http://192.168.174.130:8080") {
     
     companion object {
         private const val TAG = "WebServerClient"
@@ -214,7 +214,7 @@ class WebServerClient(private val baseUrl: String = "http://192.168.1.100:8080")
 object WebServerConfig {
     // Default server configurations for different environments
     const val LOCALHOST = "http://10.0.2.2:8080"  // For Android emulator
-    const val DEFAULT_LOCAL_NETWORK = "http://192.168.1.100:8080"  // For real device on same network
+    const val DEFAULT_LOCAL_NETWORK = "http://192.168.174.130:8080"  // For real device on same network
     
     // Automatically detected server URL (updated after first successful connection)
     private var detectedServerUrl: String? = null
@@ -224,7 +224,8 @@ object WebServerConfig {
      * The first URL is your computer's detected IP address
      */
     private val commonServerUrls = listOf(
-        "http://192.168.86.130:8080",  // Your computer's IP (detected)
+        "http://192.168.174.130:8080",  // Your computer's IP (detected)
+        "http://172.20.48.1:8080",      // Alternative IP
         "http://192.168.1.100:8080",   // Common router range
         "http://192.168.0.100:8080",   // Alternative range
         "http://10.0.0.100:8080",      // Alternative range
