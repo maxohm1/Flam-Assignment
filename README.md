@@ -138,6 +138,8 @@ A real-time computer vision application featuring Android native processing with
 ### Web Viewer
 - **Live Streaming** - Real-time frame updates via WebSocket
 - **Statistics Dashboard** - Server metrics and frame information
+- **Test panel** - `http://localhost:8080/test-viewer.html`
+     Click Send Test Frame button. its reflect to sample image to Live Feed.
 
 > Note: Run the application to see it in action. The Android app displays camera frames with different processing modes using the Toggle Mode button, and the web viewer shows frames sent from the app in real-time.
 
