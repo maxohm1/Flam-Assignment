@@ -193,16 +193,15 @@ A real-time computer vision application featuring Android native processing with
    - Main viewer: `http://localhost:8080/index.html`
    - Live streaming: `http://localhost:8080/live.html`
 
-## 📱 Real-Time Phone to Web Connection Guide
+##  Real-Time Phone to Web Connection Guide
 
-This section explains how to connect your Android phone to the web viewer for real-time frame streaming.
+Connect your Android phone to the web viewer for real-time frame streaming.
 
 ### Prerequisites
 - Android phone and computer must be on the **same WiFi network**
 - Web server must be running on your computer
 - Android app must be installed on your phone
 
-### Step-by-Step Connection Setup
 
 #### Step 1: Find Your Computer's IP Address
 
@@ -261,38 +260,16 @@ Add your computer's IP address to allow cleartext HTTP traffic:
 </network-security-config>
 ```
 
-> **Why is this needed?** Android 9+ blocks cleartext (non-HTTPS) HTTP traffic by default for security. This configuration explicitly allows HTTP connections to your local server.
 
 #### Step 4: Rebuild the Android App
 
 **Using Gradle (Command Line):**
-```bash
-# Clean previous builds
-./gradlew clean
 
-# Build the APK with updated configuration
-./gradlew assembleDebug
-```
-
-**Or in Android Studio:**
+** in Android Studio:**
 1. Click **Build** → **Clean Project**
 2. Click **Build** → **Rebuild Project**
 
-#### Step 5: Install Updated App on Your Phone
-
-**Option A: Using ADB (Recommended)**
-```bash
-# Check if device is connected
-adb devices
-
-# Install/update the app
-adb install -r app/build/outputs/apk/debug/app-debug.apk
-```
-
-**Option B: Manual Installation**
-1. Copy `app/build/outputs/apk/debug/app-debug.apk` to your phone
-2. Install the APK on your phone
-3. Allow "Install from Unknown Sources" if prompted
+#### Step 5: Install Updated App on Your Phone(Tap Play Button In Android Studio It will Install Automatically) ADB Recommended
 
 #### Step 6: Start the Web Server
 
@@ -300,23 +277,6 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```bash
 cd web
 npm run server
-```
-
-**Or run in background (PowerShell):**
-```powershell
-Start-Process -FilePath "node" -ArgumentList "server.js" -WorkingDirectory "<path-to-project>\web"
-```
-
-You should see:
-```
-============================================================
-CV Processing Server Started
-============================================================
-🚀 Server running on http://0.0.0.0:8080
-🌐 Web Viewer: http://localhost:8080
-📡 WebSocket: ws://localhost:8080
-📱 Android: http://192.168.174.130:8080
-============================================================
 ```
 
 #### Step 7: Open Live Viewer in Browser
@@ -328,205 +288,18 @@ On your computer, open: **http://localhost:8080/live.html**
 Start-Process "http://localhost:8080/live.html"
 ```
 
-#### Step 8: Launch Android App
+#### Step 8: Open Android App
 
-**Option A: Tap the app icon on your phone**
-
-**Option B: Launch via ADB:**
-```bash
-adb shell am start -n max.ohm.assignment/.MainActivity
-```
-
-#### Step 9: Grant Permissions
-
-When the app opens:
-1. Grant **Camera** permission when prompted
-2. Grant **Network** access if prompted
-
-#### Step 10: Start Processing
+#### Step 9: Start Processing
 
 1. Point your phone camera at something
 2. Tap **"Toggle Mode"** button to switch between:
-   - 📷 **Raw** - Original camera feed
-   - ⚫ **Grayscale** - Black and white conversion
-   - 🔍 **Edge Detection** - Canny edge detection
+   -  **Raw** - Original camera feed
+   -  **Grayscale** - Black and white conversion
+   -  **Edge Detection** - Canny edge detection
 
-3. Watch the frames appear in your web browser in real-time! 🎉
+3. Watch the frames appear in your web browser in real-time! 
 
-### How It Works
-
-```
-┌─────────────────────┐
-│   Android Phone     │
-│   (Camera App)      │
-└──────────┬──────────┘
-           │
-           │ 1. Captures video frames
-           │ 2. Processes with OpenCV (C++)
-           │ 3. Converts to Base64 JPEG
-           │
-           ▼ HTTP POST to http://YOUR_IP:8080/api/frame
-┌─────────────────────┐
-│   Node.js Server    │
-│   (Your Computer)   │
-│   Port 8080         │
-└──────────┬──────────┘
-           │
-           │ 4. Stores frame data
-           │ 5. Broadcasts via WebSocket
-           │
-           ▼ WebSocket Stream
-┌─────────────────────┐
-│   Web Browser       │
-│   (Live Viewer)     │
-└─────────────────────┘
-     6. Displays frames in real-time
-```
-
-### Verification & Monitoring
-
-#### Check Server Status
-```bash
-curl http://localhost:8080/api/stats
-```
-
-**PowerShell:**
-```powershell
-Invoke-WebRequest -Uri "http://localhost:8080/api/stats" -UseBasicParsing | Select-Object -ExpandProperty Content
-```
-
-Expected output:
-```json
-{
-  "success": true,
-  "data": {
-    "totalFrames": 150,
-    "avgFPS": "6.2",
-    "lastFrameTime": 1760002859311,
-    "connectedClients": 1,
-    "uptime": 145.2,
-    "historySize": 50
-  }
-}
-```
-
-#### View Android Logs
-```bash
-adb logcat -s WebServerClient:* MainActivity:*
-```
-
-Successful connection logs:
-```
-D WebServerClient: Frame sent successfully: {"success":true,"message":"Frame uploaded successfully","frameId":150}
-```
-
-### Troubleshooting
-
-#### ❌ Problem: "No frames appearing in web viewer"
-
-**Solution 1: Check Network Connection**
-- Ensure phone and computer are on the **same WiFi network**
-- Verify your IP address hasn't changed: `ipconfig` or `ifconfig`
-
-**Solution 2: Check Server Logs**
-```bash
-# View server console for incoming connections
-# You should see: "Frame received: EDGE_DETECTION (1080x1080) - Total: 150"
-```
-
-**Solution 3: Check Android Logs**
-```bash
-adb logcat -s WebServerClient:*
-```
-Look for errors like:
-- `Cleartext HTTP traffic not permitted` → Update network_security_config.xml
-- `Connection refused` → Wrong IP address or server not running
-- `Network unreachable` → Check WiFi connection
-
-#### ❌ Problem: "Cleartext HTTP traffic not permitted"
-
-**Solution:**
-Update `app/src/main/res/xml/network_security_config.xml` to include your computer's IP address (see Step 3 above).
-
-#### ❌ Problem: "Connection refused"
-
-**Possible causes:**
-1. **Server not running** → Start the server: `npm run server`
-2. **Wrong IP address** → Verify IP with `ipconfig` and update Android app
-3. **Firewall blocking** → Allow Node.js through Windows Firewall
-
-**Check Windows Firewall:**
-```powershell
-netsh advfirewall firewall show rule name="Node.js JavaScript Runtime"
-```
-
-#### ❌ Problem: "Server running but frames not displaying"
-
-**Solution:**
-1. Refresh the browser page (Ctrl+F5 or Cmd+Shift+R)
-2. Check browser console for WebSocket errors (F12 → Console)
-3. Verify server is bound to `0.0.0.0` not just `localhost`
-
-### Performance Tips
-
-- **Optimal FPS:** 5-10 fps for smooth streaming without overloading network
-- **Resolution:** App uses 1080x1080 by default (adjustable in CameraHandler.kt)
-- **Network:** Use 5GHz WiFi for better performance
-- **Processing:** Edge detection is most CPU-intensive mode
-
-### API Endpoints
-
-The server provides several REST API endpoints:
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/frame` | GET | Get current frame data |
-| `/api/frame` | POST | Upload frame from Android |
-| `/api/history` | GET | Get frame history (last 50) |
-| `/api/stats` | GET | Get server statistics |
-| `/api/health` | GET | Health check endpoint |
-| `/api/clear` | POST | Clear all frame data |
-
-### Quick Start Commands
-
-**Complete setup in one go:**
-
-```bash
-# 1. Find your IP
-ipconfig | Select-String -Pattern "IPv4"
-
-# 2. Update Android config (edit files manually with your IP)
-
-# 3. Rebuild app
-.\gradlew.bat clean assembleDebug
-
-# 4. Install on phone
-adb install -r app\build\outputs\apk\debug\app-debug.apk
-
-# 5. Start web server
-cd web
-npm run server
-
-# 6. Open live viewer
-Start-Process "http://localhost:8080/live.html"
-
-# 7. Launch Android app
-adb shell am start -n max.ohm.assignment/.MainActivity
-
-# 8. Monitor connection
-adb logcat -s WebServerClient:*
-```
-
-### Advanced: Using with Android Emulator
-
-If using an Android emulator instead of a physical device:
-
-**Update WebServerClient.kt to use emulator IP:**
-```kotlin
-class WebServerClient(private val baseUrl: String = "http://10.0.2.2:8080") {
-```
-
-> Note: `10.0.2.2` is a special IP that refers to the host machine (your computer) from the Android emulator.
 
 ## Architecture
 
