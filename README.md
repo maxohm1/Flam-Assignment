@@ -192,6 +192,33 @@ A real-time computer vision application featuring Android native processing with
 5. **Access Viewer**
    - Main viewer: `http://localhost:8080/index.html`
    - Live streaming: `http://localhost:8080/live.html`
+   - Test panel: `http://localhost:8080/test-viewer.html`
+
+### Testing Without Android Device
+
+The web viewer includes a test panel for development and testing without requiring an Android device.
+
+**Test Panel Features:**
+- Server health check and connectivity testing
+- WebSocket connection verification
+- Sample frame generation and transmission
+- Direct access to live viewer
+
+**Usage:**
+1. Start the web server: `npm run server`
+2. Open test panel: `http://localhost:8080/test-viewer.html`
+3. Click "Send Test Frame to Server" to generate a sample image
+4. Click "Open Live Viewer" to see the test frame in live.html
+5. The test frame is dynamically generated using HTML Canvas (200x200 gradient with text)
+
+**Test Frame Specifications:**
+- Resolution: 200x200 pixels
+- Format: Base64-encoded PNG
+- Pattern: Green-to-blue gradient with "TEST FRAME" text
+- FPS: 15.5 (simulated)
+- Processing Mode: GRAYSCALE (label)
+
+This allows developers to verify the server and viewer functionality before connecting an actual Android device.
 
 ##  Real-Time Phone to Web Connection Guide
 
