@@ -20,7 +20,7 @@ A real-time computer vision application featuring Android native processing with
 - **REST API** - Frame data and statistics endpoints
 - **Express.js Backend** - Node.js web server
 - **Live Statistics** - Performance metrics display
-
+- **Web Viewer Test** - Sample image reflect to Live Feed
 ### CheckOut the Assignment Demo Video
 
 <a href="https://drive.google.com/file/d/13QaEKrK8w1gY3QuNUYkWejyT0P_AqQFM/view?usp=sharing" target="_blank">
@@ -204,36 +204,9 @@ A real-time computer vision application featuring Android native processing with
    ```
 
 5. **Access Viewer**
-   - Main viewer: `http://localhost:8080/index.html`
    - Live streaming: `http://localhost:8080/live.html`
    - Test panel: `http://localhost:8080/test-viewer.html`
-
-### Testing Without Android Device
-
-The web viewer includes a test panel for development and testing without requiring an Android device.
-
-**Test Panel Features:**
-- Server health check and connectivity testing
-- WebSocket connection verification
-- Sample frame generation and transmission
-- Direct access to live viewer
-
-**Usage:**
-1. Start the web server: `npm run server`
-2. Open test panel: `http://localhost:8080/test-viewer.html`
-3. Click "Send Test Frame to Server" to generate a sample image
-4. Click "Open Live Viewer" to see the test frame in live.html
-5. The test frame is dynamically generated using HTML Canvas (200x200 gradient with text)
-
-**Test Frame Specifications:**
-- Resolution: 200x200 pixels
-- Format: Base64-encoded PNG
-- Pattern: Green-to-blue gradient with "TEST FRAME" text
-- FPS: 15.5 (simulated)
-- Processing Mode: GRAYSCALE (label)
-
-This allows developers to verify the server and viewer functionality before connecting an actual Android device.
-
+     Click Send Test Frame button. its reflect to sample image to Live Feed.
 ##  Real-Time Phone to Web Connection Guide
 
 Connect your Android phone to the web viewer for real-time frame streaming.
